@@ -27,7 +27,7 @@ class Kindergarten:
                 dbc.Tabs(
                     [
                         dbc.Tab(
-                            self.tabs[i].component(), label=f"Trace {i}", id=f"tab-{i}"
+                            self.tabs[i].component(), label="Trace {}".format(i), id="tab-{}".format(i)
                         )
                         for i in range(len(self.tabs))
                     ],
@@ -61,8 +61,8 @@ class Kindergarten:
         for i in range(len(self.tabs)):
 
             @self.app.callback(
-                Output(f"selector-{i}", "children"),
-                [Input(f"graph-type-{i}", "value"), Input(f"dataframe-{i}", "value")],
+                Output("selector-{}".format(i), "children"),
+                [Input("graph-type-{}".format(i), "value"), Input("dataframe-{}".format(i), "value")],
                 prevent_initial_call=True,
             )
             def _on_graph_type_or_dataframe_change_update_selector(
@@ -78,17 +78,17 @@ class Kindergarten:
 
         all_options = sum(
             [list(tab.options.values()) for tab in self.tabs],
-            start=[],
+            [],
         )
         inputs = (
             [Input(option.id, "value") for option in all_options]
-            + [Input(f"graph-type-{i}", "value") for i in range(len(self.tabs))]
-            + [Input(f"dataframe-{i}", "value") for i in range(len(self.tabs))]
+            + [Input("graph-type-{}".format(i), "value") for i in range(len(self.tabs))]
+            + [Input("dataframe-{}".format(i), "value") for i in range(len(self.tabs))]
         )
         input_names = (
             [option.id for option in all_options]
-            + [f"graph-type-{i}" for i in range(len(self.tabs))]
-            + [f"dataframe-{i}" for i in range(len(self.tabs))]
+            + ["graph-type-{}".format(i) for i in range(len(self.tabs))]
+            + ["dataframe-{}".format(i) for i in range(len(self.tabs))]
         )
 
         @self.app.callback(
@@ -111,7 +111,7 @@ class Kindergarten:
         )
         def _on_print_code(n_clicks: int):
             if n_clicks > 0:
-                s = f"""
+                s = """
 import plotly.graph_objs as go
 from plotly.subplots import make_subplots
 import plotly.express as px
@@ -121,16 +121,16 @@ fig = make_subplots()
 
                 for tab in self.tabs:
                     if tab.has_figure():
-                        varname = f"trace_{tab.tab_id}"
-                        s += f"""
-{tab.figure_str(varname)[:-1]}
-fig.add_traces(list({varname}.select_traces()))
-fig.update_layout({varname}.layout)
-"""
+                        varname = "trace_{}".format(tab.tab_id)
+                        s += """
+{}
+fig.add_traces(list({}.select_traces()))
+fig.update_layout({}.layout)
+""".format(tab.figure_str(varname)[:-1], varname, varname)
 
                 for tab in self.tabs:
                     if tab.layout_kwargs():
-                        s += f"\nfig.update_layout(**{tab.layout_kwargs()})"
+                        s += "\nfig.update_layout(**{})".format(tab.layout_kwargs())
 
                 s += "\nfig.update_layout(showlegend=True)"
                 s += "\nfig.show()"

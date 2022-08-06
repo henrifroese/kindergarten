@@ -99,14 +99,14 @@ class Tab:
     def figure_str(self, varname: str) -> str:
         px_kwargs, update_traces_kwargs, _ = self._figure_kwargs(ignore_defaults=True)
 
-        s = f"# Trace {self.tab_id}\n"
+        s = "# Trace {}\n".format(self.tab_id)
 
         if px_kwargs:
-            s += f"{varname} = px.{self.graph_type}({self.df_name}, **{px_kwargs})\n"
+            s += "{} = px.{}({}, **{})\n".format(varname, self.graph_type, self.df_name, px_kwargs)
         else:
-            s += f"{varname} = px.{self.graph_type}({self.df_name})\n"
+            s += "{} = px.{}({})\n".format(varname, self.graph_type, self.df_name)
         if update_traces_kwargs:
-            s += f"{varname}.update_traces(**{update_traces_kwargs})\n"
+            s += "{}.update_traces(**{})\n".format(varname, update_traces_kwargs)
 
         return s
 
@@ -153,7 +153,7 @@ class Tab:
         )
 
     def add_tab_id(self, component_id: str):
-        return f"{component_id}-{self.tab_id}"
+        return "{}-{}".format(component_id, self.tab_id)
 
     @staticmethod
     def _build_basic_component(basic_option_components: List[Component]):

@@ -64,7 +64,7 @@ class GraphOption(ABC):
 
     def __init__(self, df: pd.DataFrame, option_id: int):
         self.df: pd.DataFrame = df
-        self.id = f"{self.keyword}-{option_id}"
+        self.id = "{}-{}".format(self.keyword, option_id)
         self.component: Component = self._build_component()
         self.hidden_component: Component = self._build_hidden_component()
 
@@ -95,7 +95,6 @@ class GraphOption(ABC):
 
 
 def build_graph_option(
-    *,
     _basic: bool,
     _keyword: str,
     _label: str,
@@ -121,7 +120,6 @@ def build_graph_option(
 
 
 def build_select_graph_option(
-    *,
     _keyword: str,
     _label: str,
     _basic: bool = False,
@@ -151,7 +149,6 @@ def build_select_graph_option(
 
 
 def build_multiselect_graph_option(
-    *,
     _keyword: str,
     _label: str,
     _basic: bool = False,
@@ -185,7 +182,6 @@ def build_multiselect_graph_option(
 
 
 def build_checklist_graph_option(
-    *,
     _keyword: str,
     _label: str,
     _basic: bool = False,
@@ -218,7 +214,6 @@ def build_checklist_graph_option(
 
 
 def build_switch_graph_option(
-    *,
     _keyword: str,
     _label: str,
     _basic: bool = False,
@@ -246,7 +241,6 @@ def build_switch_graph_option(
 
 
 def build_numeric_graph_option(
-    *,
     _keyword: str,
     _label: str,
     _min: float,
@@ -281,7 +275,6 @@ def build_numeric_graph_option(
 
 
 def build_text_graph_option(
-    *,
     _keyword: str,
     _label: str,
     _basic: bool = False,
@@ -658,10 +651,10 @@ params_without_implementation = set(param_to_graph_types.keys()) - set(
 )
 if params_without_implementation:
     warnings.warn(
-        f"The following parameters "
-        f"are not ignored but do not "
-        f"have an implementation: "
-        f"{params_without_implementation}"
+        "The following parameters "
+        "are not ignored but do not "
+        "have an implementation: "
+        "{}".format(params_without_implementation)
     )
 
 for graph_option in GRAPH_OPTIONS:
