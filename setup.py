@@ -7,7 +7,7 @@ version='0.0.2'
 requirements = [
     "dash-bootstrap-components>=1.2.0",
     "dash>=2.6.0",
-    "pandas>=1.4.3",
+    "pandas>=1.3.5",
     "plotly>=5.9.0",
     "jupyter-dash>=0.4.2",
 ]
