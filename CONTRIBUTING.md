@@ -90,3 +90,12 @@ Pull Request Guidelines
 Before you submit a pull request, check that it meets these guidelines:
 
 3. The pull request should work for Python 3.7 and 3.8, and for PyPy.
+
+
+Publishing a new version
+------------------------
+
+1. `bumpversion --config-file setup.cfg --current-version ABC --new-version XYZ part patch` (or minor or major)
+2. `rm -rf dist/`
+3. `python3 -m build`
+4. `python3 -m twine upload dist/*`
