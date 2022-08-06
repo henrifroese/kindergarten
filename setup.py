@@ -2,7 +2,7 @@
 
 from setuptools import setup, find_packages
 
-version='0.0.2'
+version='0.0.3'
 
 requirements = [
     "dash-bootstrap-components>=1.2.0",
