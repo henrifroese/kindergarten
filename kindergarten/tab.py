@@ -1,4 +1,5 @@
 from typing import Dict, Any, List, Tuple
+import traceback
 
 import dash_bootstrap_components as dbc
 import pandas as pd
@@ -102,7 +103,14 @@ class Tab:
 
             return fig
 
-        except Exception:
+        except:
+            print(
+                "Something went wrong generating the figure - "
+                "please consider opening an issue at "
+                "www.github.com/henrifroese/kindergarten/issues "
+                "to get this fixed. Here's the original "
+                "exception: {}".format(traceback.format_exc())
+            )
             return go.Figure()
 
     def layout_kwargs(self):
