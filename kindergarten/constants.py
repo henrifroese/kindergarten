@@ -268,7 +268,6 @@ UNSUPPORTED_PARAMS = {
     "trendline",
     "color_continuous_midpoint",
     "range_color",
-    "opacity",
     "render_mode",
     "pattern_shape_sequence",
     "pattern_shape_map",
