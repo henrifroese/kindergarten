@@ -81,20 +81,26 @@ class Tab:
 
         import __main__
 
-        fig = getattr(px, self.graph_type)(getattr(__main__, self.df_name), **px_kwargs)
-        fig.update_traces(**update_traces_kwargs)
+        try:
+            fig = getattr(px, self.graph_type)(
+                getattr(__main__, self.df_name), **px_kwargs
+            )
+            fig.update_traces(**update_traces_kwargs)
 
-        if self.graph_type in ("scatter", "line"):
-            try:
-                fig.update_traces(textposition="bottom right")
-            except Exception:
-                pass
+            if self.graph_type in ("scatter", "line"):
+                try:
+                    fig.update_traces(textposition="bottom right")
+                except Exception:
+                    pass
 
-        # If we don't do this, Plotly doesn't show the legend for single traces
-        for d in fig["data"]:
-            d["showlegend"] = True
+            # If we don't do this, Plotly doesn't show the legend for single traces
+            for d in fig["data"]:
+                d["showlegend"] = True
 
-        return fig
+            return fig
+
+        except Exception:
+            return go.Figure()
 
     def layout_kwargs(self):
         _, _, update_layout_kwargs = self._figure_kwargs()
@@ -235,7 +241,7 @@ class Tab:
         dataframes = [
             var
             for var in dir(__main__)
-            if isinstance(getattr(__main__, var), pd.DataFrame)
+            if isinstance(getattr(__main__, var), (pd.DataFrame, pd.Series))
         ]
 
         return html.Label(

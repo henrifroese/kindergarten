@@ -1,6 +1,6 @@
 # Kindergarten - Interactive Plotting GUI for Python Notebooks
 
-Kindergarten is a UI on top of Plotly to visualize Pandas DataFrames.
+Kindergarten is a UI on top of Plotly to visualize Pandas DataFrames (and Series).
 
 Simply `pip install kindergarten`, and then do
 
