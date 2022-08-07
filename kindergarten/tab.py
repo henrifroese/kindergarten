@@ -65,6 +65,9 @@ class Tab:
         self._reset_graph_kwargs()
 
     def update_dataframe(self, df_name: str):
+        if not df_name:
+            return
+
         import __main__
 
         self.df_name = df_name
