@@ -89,8 +89,8 @@ Pull Request Guidelines
 
 Before you submit a pull request, check that it meets these guidelines:
 
-3. The pull request should work for Python 3.7 and 3.8, and for PyPy.
-
+1. The pull request should work for Python>=3.7.
+2. Format your code with `black .` and test it with `pytest .` before committing.
 
 Publishing a new version
 ------------------------

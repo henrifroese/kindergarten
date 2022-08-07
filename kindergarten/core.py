@@ -27,7 +27,9 @@ class Kindergarten:
                 dbc.Tabs(
                     [
                         dbc.Tab(
-                            self.tabs[i].component(), label="Trace {}".format(i), id="tab-{}".format(i)
+                            self.tabs[i].component(),
+                            label="Trace {}".format(i),
+                            id="tab-{}".format(i),
                         )
                         for i in range(len(self.tabs))
                     ],
@@ -62,7 +64,10 @@ class Kindergarten:
 
             @self.app.callback(
                 Output("selector-{}".format(i), "children"),
-                [Input("graph-type-{}".format(i), "value"), Input("dataframe-{}".format(i), "value")],
+                [
+                    Input("graph-type-{}".format(i), "value"),
+                    Input("dataframe-{}".format(i), "value"),
+                ],
                 prevent_initial_call=True,
             )
             def _on_graph_type_or_dataframe_change_update_selector(
@@ -126,7 +131,9 @@ fig = make_subplots()
 {}
 fig.add_traces(list({}.select_traces()))
 fig.update_layout({}.layout)
-""".format(tab.figure_str(varname)[:-1], varname, varname)
+""".format(
+                            tab.figure_str(varname)[:-1], varname, varname
+                        )
 
                 for tab in self.tabs:
                     if tab.layout_kwargs():

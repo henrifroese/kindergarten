@@ -7,7 +7,11 @@ import plotly.graph_objs as go
 from dash import html
 from dash.development.base_component import Component
 
-from kindergarten.constants import NONE_OPTION, SUPPORTED_GRAPH_TYPES, DEFAULT_GRAPH_TYPE
+from kindergarten.constants import (
+    NONE_OPTION,
+    SUPPORTED_GRAPH_TYPES,
+    DEFAULT_GRAPH_TYPE,
+)
 from kindergarten.graph_options import (
     GRAPH_OPTIONS,
     GraphOption,
@@ -102,7 +106,9 @@ class Tab:
         s = "# Trace {}\n".format(self.tab_id)
 
         if px_kwargs:
-            s += "{} = px.{}({}, **{})\n".format(varname, self.graph_type, self.df_name, px_kwargs)
+            s += "{} = px.{}({}, **{})\n".format(
+                varname, self.graph_type, self.df_name, px_kwargs
+            )
         else:
             s += "{} = px.{}({})\n".format(varname, self.graph_type, self.df_name)
         if update_traces_kwargs:
