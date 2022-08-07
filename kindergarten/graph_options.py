@@ -394,6 +394,14 @@ BarMode = build_select_graph_option(
     _select_options_callable=lambda self: to_options(("relative", "group", "overlay")),
 )
 
+Opacity = build_numeric_graph_option(
+    _keyword="opacity",
+    _label="Opacity",
+    _min=0.0,
+    _max=1.0,
+    _step=0.05,
+)
+
 # noinspection PyTypeChecker
 BoxMode = build_select_graph_option(
     _keyword="boxmode",
