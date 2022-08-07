@@ -370,9 +370,9 @@ Values = build_select_graph_option(_keyword="values", _label="Values", _basic=Tr
 
 LineGroup = build_select_graph_option(_keyword="line_group", _label="Group By")
 
-LineDash = build_select_graph_option(_keyword="line_dash", _label="Dash Type")
+LineDash = build_select_graph_option(_keyword="line_dash", _label="Choose Dash Type By")
 
-Color = build_select_graph_option(_keyword="color", _label="Color")
+Color = build_select_graph_option(_keyword="color", _label="Color By")
 
 LineColor = build_select_graph_option(
     _keyword="line_color",
@@ -383,7 +383,7 @@ LineColor = build_select_graph_option(
 )
 
 PatternShape = build_select_graph_option(
-    _keyword="pattern_shape", _label="Pattern Shape"
+    _keyword="pattern_shape", _label="Choose Pattern Shape By"
 )
 
 # noinspection PyTypeChecker
@@ -453,9 +453,9 @@ ColorDiscreteSequence = build_select_graph_option(
     ],
 )
 
-Size = build_select_graph_option(_keyword="size", _label="Size")
+Size = build_select_graph_option(_keyword="size", _label="Choose Size By")
 
-Symbol = build_select_graph_option(_keyword="symbol", _label="Symbol")
+Symbol = build_select_graph_option(_keyword="symbol", _label="Choose Symbol By")
 
 XError = build_select_graph_option(_keyword="error_x", _label="X-Axis Error Bars")
 
@@ -528,7 +528,7 @@ MarkerSymbol = build_select_graph_option(
 
 LegendName = build_text_graph_option(
     _keyword="name",
-    _label="Legend Name",
+    _label="Legend Entry Name",
     _is_px_keyword=False,
     _valid_graph_types=("scatter", "line"),
     _default_kwarg_value_callable=lambda self: None,
