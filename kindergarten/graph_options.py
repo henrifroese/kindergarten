@@ -173,7 +173,7 @@ def build_multiselect_graph_option(
             value=self.default_kwarg_value(),
             options=_select_options_callable(self),
             multi=True,
-            style={"min-width": 150},
+            style={"min-width": 200},
         )
 
     return build_graph_option(
