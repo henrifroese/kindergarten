@@ -2,7 +2,7 @@
 
 from setuptools import setup, find_packages
 
-version='0.0.4'
+version = "0.0.4"
 
 requirements = [
     "dash-bootstrap-components>=1.2.0",
@@ -31,7 +31,7 @@ setup(
     install_requires=requirements,
     license="MIT license",
     long_description="",
-    long_description_content_type='text/markdown',
+    long_description_content_type="text/markdown",
     include_package_data=True,
     keywords="kindergarten",
     name="kindergarten",
