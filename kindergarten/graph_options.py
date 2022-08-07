@@ -32,6 +32,9 @@ def to_options(values) -> Any:
 
 
 def column_options(df, include_none=True, include_name_if_present=True):
+    if isinstance(df, pd.Series):
+        return [NONE_OPTION] if include_none else []
+
     if include_name_if_present and (df.columns.name is not None):
         cols = to_options(list(df.columns) + [df.columns.name])
     else:
@@ -44,6 +47,9 @@ def column_options(df, include_none=True, include_name_if_present=True):
 
 
 def nth_numeric_column_name(df, n):
+    if isinstance(df, pd.Series):
+        return None
+
     numeric_cols = [
         df.columns[i]
         for i in range(len(df.columns))
