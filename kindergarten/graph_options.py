@@ -476,6 +476,16 @@ LineColor = build_select_graph_option(
     _valid_graph_types=("line",),
 )
 
+LineWidth = build_numeric_graph_option(
+    _keyword="line_width",
+    _label="Line Width",
+    _min=0,
+    _max=10,
+    _step=0.25,
+    _is_px_keyword=False,
+    _valid_graph_types=("line", "timeline", "line_3d"),
+)
+
 ColorContinuousScale = build_select_graph_option(
     _keyword="color_continuous_scale",
     _label="Color Scale",
