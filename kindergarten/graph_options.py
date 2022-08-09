@@ -422,6 +422,13 @@ ZAxisTitle = build_text_graph_option(
     _is_px_keyword=False,
 )
 
+SecondaryY = build_switch_graph_option(
+    _keyword="secondary_y",
+    _label="Use Secondary Y-Axis",
+    _valid_graph_types=("bar", "line", "area", "timeline", "histogram", "scatter"),
+    _is_px_keyword=False,
+)
+
 LineGroup = build_select_graph_option(_keyword="line_group", _label="Group By")
 
 LineDash = build_select_graph_option(_keyword="line_dash", _label="Choose Dash Type By")

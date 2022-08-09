@@ -121,19 +121,31 @@ import plotly.graph_objs as go
 from plotly.subplots import make_subplots
 import plotly.express as px
 
-fig = make_subplots()
-"""
+fig = make_subplots({})
+""".format(
+                    "specs=[[{'secondary_y': True}]]" if self._use_secondary_y() else ""
+                )
 
                 for tab in self.tabs:
                     if tab.has_figure():
                         varname = "trace_{}".format(tab.tab_id)
-                        s += """
+                        if tab.use_secondary_y:
+                            s += """
+{}
+traces = list({}.select_traces())
+fig.add_traces(traces, secondary_ys=[True] * len(traces))
+fig.update_layout({}.layout)
+""".format(
+                                tab.figure_str(varname)[:-1], varname, varname
+                            )
+                        else:
+                            s += """
 {}
 fig.add_traces(list({}.select_traces()))
 fig.update_layout({}.layout)
 """.format(
-                            tab.figure_str(varname)[:-1], varname, varname
-                        )
+                                tab.figure_str(varname)[:-1], varname, varname
+                            )
 
                 for tab in self.tabs:
                     if tab.layout_kwargs():
@@ -145,14 +157,23 @@ fig.update_layout({}.layout)
 
             return html.Div()
 
+    def _use_secondary_y(self) -> bool:
+        return any(tab.use_secondary_y for tab in self.tabs)
+
     def _figure(self) -> go.Figure:
-        fig = make_subplots()
+        if self._use_secondary_y():
+            fig = make_subplots(specs=[[{"secondary_y": True}]])
+        else:
+            fig = make_subplots()
 
         for tab in self.tabs:
-            f = tab.figure()
-            fig.add_traces(list(f.select_traces()))
+            tab_fig = tab.figure()
+            tab_traces = list(tab_fig.select_traces())
+            tab_secondary_ys = [True if tab.use_secondary_y else None] * len(tab_traces)
+
+            fig.add_traces(tab_traces, secondary_ys=tab_secondary_ys)
             # noinspection PyTypeChecker
-            fig.update_layout(f.layout)
+            fig.update_layout(tab_fig.layout)
 
         for tab in self.tabs:
             fig.update_layout(tab.layout_kwargs())

@@ -29,6 +29,7 @@ class Tab:
         self.graph_kwargs: Dict[str, Any] = {}
         self.graph_type = DEFAULT_GRAPH_TYPE
         self.df_name = None
+        self.use_secondary_y = False
         self.options: Dict[str, GraphOption] = {
             option.keyword: option(pd.DataFrame(), self.tab_id)
             for option in GRAPH_OPTIONS
@@ -43,6 +44,8 @@ class Tab:
             self.update_graph_type(value)
         elif kw == "dataframe":
             self.update_dataframe(value)
+        elif kw == "secondary_y":
+            self.use_secondary_y = value
         else:
             # dbc or dash turn option "value"
             # fields into strings; we recover the list here.
