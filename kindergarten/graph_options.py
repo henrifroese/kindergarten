@@ -311,6 +311,18 @@ XAxis = build_select_graph_option(
     _basic=True,
 )
 
+YAxis = build_multiselect_graph_option(
+    _keyword="y",
+    _label="Y-Axis",
+    _basic=True,
+)
+
+ZAxis = build_select_graph_option(
+    _keyword="z",
+    _label="Z-Axis",
+    _basic=True,
+)
+
 Dimensions = build_multiselect_graph_option(
     _keyword="dimensions",
     _label="Dimensions",
@@ -327,23 +339,6 @@ XEnd = build_select_graph_option(
     _keyword="x_end",
     _label="X-Axis End Values",
     _basic=True,
-)
-
-YAxis = build_multiselect_graph_option(
-    _keyword="y",
-    _label="Y-Axis",
-    _basic=True,
-)
-
-ZAxis = build_select_graph_option(
-    _keyword="z",
-    _label="Z-Axis",
-    _basic=True,
-)
-
-Title = build_text_graph_option(
-    _keyword="title",
-    _label="Title",
 )
 
 A = build_select_graph_option(
@@ -368,11 +363,100 @@ Names = build_select_graph_option(_keyword="names", _label="Names", _basic=True)
 
 Values = build_select_graph_option(_keyword="values", _label="Values", _basic=True)
 
+Title = build_text_graph_option(
+    _keyword="title",
+    _label="Title",
+)
+
+TitleFontSize = build_numeric_graph_option(
+    _keyword="title_font_size",
+    _label="Title Font Size",
+    _valid_graph_types=SUPPORTED_GRAPH_TYPES,
+    _is_px_keyword=False,
+    _min=0,
+    _max=100,
+    _step=1,
+)
+
+Width = build_numeric_graph_option(
+    _keyword="width", _label="Width", _min=0, _max=10_000, _step=50
+)
+
+Height = build_numeric_graph_option(
+    _keyword="height", _label="Height", _min=0, _max=10_000, _step=50
+)
+
+LegendTitle = build_text_graph_option(
+    _keyword="legend_title",
+    _label="Legend Title",
+    _valid_graph_types=SUPPORTED_GRAPH_TYPES,
+    _is_px_keyword=False,
+)
+
+LegendName = build_text_graph_option(
+    _keyword="name",
+    _label="Legend Entry Name",
+    _is_px_keyword=False,
+    _valid_graph_types=("scatter", "line"),
+    _default_kwarg_value_callable=lambda self: None,
+)
+
+XAxisTitle = build_text_graph_option(
+    _keyword="xaxis_title",
+    _label="X-Axis Title",
+    _valid_graph_types=SUPPORTED_GRAPH_TYPES,
+    _is_px_keyword=False,
+)
+
+YAxisTitle = build_text_graph_option(
+    _keyword="yaxis_title",
+    _label="Y-Axis Title",
+    _valid_graph_types=SUPPORTED_GRAPH_TYPES,
+    _is_px_keyword=False,
+)
+
+ZAxisTitle = build_text_graph_option(
+    _keyword="zaxis_title",
+    _label="Z-Axis Title",
+    _valid_graph_types=("scatter_3d", "line_3d"),
+    _is_px_keyword=False,
+)
+
 LineGroup = build_select_graph_option(_keyword="line_group", _label="Group By")
 
 LineDash = build_select_graph_option(_keyword="line_dash", _label="Choose Dash Type By")
 
 Color = build_select_graph_option(_keyword="color", _label="Color By")
+
+PatternShape = build_select_graph_option(
+    _keyword="pattern_shape", _label="Choose Pattern Shape By"
+)
+
+Size = build_select_graph_option(_keyword="size", _label="Choose Size By")
+
+Symbol = build_select_graph_option(_keyword="symbol", _label="Choose Symbol By")
+
+FacetCol = build_select_graph_option(_keyword="facet_col", _label="Facet Column")
+
+FacetRow = build_select_graph_option(_keyword="facet_row", _label="Facet Row")
+
+LogX = build_switch_graph_option(_keyword="log_x", _label="Logarithmic X-Axis")
+
+LogY = build_switch_graph_option(_keyword="log_y", _label="Logarithmic Y-Axis")
+
+LogZ = build_switch_graph_option(_keyword="log_z", _label="Logarithmic Z-Axis")
+
+NBins = build_numeric_graph_option(
+    _keyword="nbins", _label="Bins", _min=0, _max=1000, _step=1
+)
+
+NBinsX = build_numeric_graph_option(
+    _keyword="nbinsx", _label="X Bins", _min=0, _max=1000, _step=1
+)
+
+NBinsY = build_numeric_graph_option(
+    _keyword="nbinsy", _label="Y Bins", _min=0, _max=1000, _step=1
+)
 
 LineColor = build_select_graph_option(
     _keyword="line_color",
@@ -382,8 +466,21 @@ LineColor = build_select_graph_option(
     _valid_graph_types=("line",),
 )
 
-PatternShape = build_select_graph_option(
-    _keyword="pattern_shape", _label="Choose Pattern Shape By"
+ColorContinuousScale = build_select_graph_option(
+    _keyword="color_continuous_scale",
+    _label="Color Scale",
+    _select_options_callable=lambda self: to_options(px.colors.named_colorscales()),
+)
+
+# noinspection PyTypeChecker
+ColorDiscreteSequence = build_select_graph_option(
+    _keyword="color_discrete_sequence",
+    _label="Color Sequence",
+    _default_kwarg_value_callable=lambda self: QUALITATIVE_COLOR_SCALES["Plotly"],
+    _select_options_callable=lambda self: [
+        {"label": name, "value": body}
+        for name, body in QUALITATIVE_COLOR_SCALES.items()
+    ],
 )
 
 # noinspection PyTypeChecker
@@ -392,14 +489,6 @@ BarMode = build_select_graph_option(
     _label="Bar Mode",
     _default_kwarg_value_callable=lambda self: "relative",
     _select_options_callable=lambda self: to_options(("relative", "group", "overlay")),
-)
-
-Opacity = build_numeric_graph_option(
-    _keyword="opacity",
-    _label="Opacity",
-    _min=0.0,
-    _max=1.0,
-    _step=0.05,
 )
 
 # noinspection PyTypeChecker
@@ -426,6 +515,14 @@ StripMode = build_select_graph_option(
     _select_options_callable=lambda self: to_options(("group", "overlay")),
 )
 
+Opacity = build_numeric_graph_option(
+    _keyword="opacity",
+    _label="Opacity",
+    _min=0.0,
+    _max=1.0,
+    _step=0.05,
+)
+
 # noinspection PyTypeChecker
 Points = build_select_graph_option(
     _keyword="points",
@@ -435,27 +532,6 @@ Points = build_select_graph_option(
         ("outliers", "suspectedoutliers", "all", False)
     ),
 )
-
-ColorContinuousScale = build_select_graph_option(
-    _keyword="color_continuous_scale",
-    _label="Color Scale",
-    _select_options_callable=lambda self: to_options(px.colors.named_colorscales()),
-)
-
-# noinspection PyTypeChecker
-ColorDiscreteSequence = build_select_graph_option(
-    _keyword="color_discrete_sequence",
-    _label="Color Sequence",
-    _default_kwarg_value_callable=lambda self: QUALITATIVE_COLOR_SCALES["Plotly"],
-    _select_options_callable=lambda self: [
-        {"label": name, "value": body}
-        for name, body in QUALITATIVE_COLOR_SCALES.items()
-    ],
-)
-
-Size = build_select_graph_option(_keyword="size", _label="Choose Size By")
-
-Symbol = build_select_graph_option(_keyword="symbol", _label="Choose Symbol By")
 
 XError = build_select_graph_option(_keyword="error_x", _label="X-Axis Error Bars")
 
@@ -474,8 +550,6 @@ YErrorMinus = build_select_graph_option(
 ZErrorMinus = build_select_graph_option(
     _keyword="error_z_minus", _label="Z-Axis Error Bars in Negative Direction"
 )
-
-HoverData = build_checklist_graph_option(_keyword="hover_data", _label="Show on Hover")
 
 Marginal = build_select_graph_option(
     _keyword="marginal",
@@ -498,16 +572,6 @@ MarginalY = build_select_graph_option(
     + to_options(("histogram", "rug", "box", "violin")),
 )
 
-FacetCol = build_select_graph_option(_keyword="facet_col", _label="Facet Column")
-
-FacetRow = build_select_graph_option(_keyword="facet_row", _label="Facet Row")
-
-LogX = build_switch_graph_option(_keyword="log_x", _label="Logarithmic X-Axis")
-
-LogY = build_switch_graph_option(_keyword="log_y", _label="Logarithmic Y-Axis")
-
-LogZ = build_switch_graph_option(_keyword="log_z", _label="Logarithmic Z-Axis")
-
 Markers = build_switch_graph_option(_keyword="markers", _label="Markers")
 
 MarkerColor = build_select_graph_option(
@@ -526,34 +590,6 @@ MarkerSymbol = build_select_graph_option(
     _valid_graph_types=("scatter", "line"),
 )
 
-LegendName = build_text_graph_option(
-    _keyword="name",
-    _label="Legend Entry Name",
-    _is_px_keyword=False,
-    _valid_graph_types=("scatter", "line"),
-    _default_kwarg_value_callable=lambda self: None,
-)
-
-Notched = build_switch_graph_option(_keyword="notched", _label="Notched Boxes")
-
-Cumulative = build_switch_graph_option(_keyword="cumulative", _label="Cumulative")
-
-TextAuto = build_switch_graph_option(_keyword="text_auto", _label="Show Text")
-
-Box = build_switch_graph_option(_keyword="box", _label="Show Box")
-
-NBins = build_numeric_graph_option(
-    _keyword="nbins", _label="Bins", _min=0, _max=1000, _step=1
-)
-
-NBinsX = build_numeric_graph_option(
-    _keyword="nbinsx", _label="X Bins", _min=0, _max=1000, _step=1
-)
-
-NBinsY = build_numeric_graph_option(
-    _keyword="nbinsy", _label="Y Bins", _min=0, _max=1000, _step=1
-)
-
 MarkerSize = build_numeric_graph_option(
     _keyword="marker_size",
     _label="Marker Size",
@@ -563,6 +599,10 @@ MarkerSize = build_numeric_graph_option(
     _is_px_keyword=False,
     _valid_graph_types=("scatter", "line"),
 )
+
+Notched = build_switch_graph_option(_keyword="notched", _label="Notched Boxes")
+
+Cumulative = build_switch_graph_option(_keyword="cumulative", _label="Cumulative")
 
 LineShape = build_select_graph_option(
     _keyword="line_shape",
@@ -600,55 +640,16 @@ HistFunc = build_select_graph_option(
     + to_options(("count", "sum", "avg", "min", "max")),
 )
 
-Text = build_select_graph_option(_keyword="text", _label="Text")
-
 Base = build_select_graph_option(_keyword="base", _label="Base Position")
 
-Width = build_numeric_graph_option(
-    _keyword="width", _label="Width", _min=0, _max=10_000, _step=50
-)
+HoverData = build_checklist_graph_option(_keyword="hover_data", _label="Show on Hover")
 
-Height = build_numeric_graph_option(
-    _keyword="height", _label="Height", _min=0, _max=10_000, _step=50
-)
+TextAuto = build_switch_graph_option(_keyword="text_auto", _label="Show Text")
 
-XAxisTitle = build_text_graph_option(
-    _keyword="xaxis_title",
-    _label="X-Axis Title",
-    _valid_graph_types=SUPPORTED_GRAPH_TYPES,
-    _is_px_keyword=False,
-)
+Box = build_switch_graph_option(_keyword="box", _label="Show Box")
 
-YAxisTitle = build_text_graph_option(
-    _keyword="yaxis_title",
-    _label="Y-Axis Title",
-    _valid_graph_types=SUPPORTED_GRAPH_TYPES,
-    _is_px_keyword=False,
-)
+Text = build_select_graph_option(_keyword="text", _label="Text")
 
-ZAxisTitle = build_text_graph_option(
-    _keyword="zaxis_title",
-    _label="Z-Axis Title",
-    _valid_graph_types=("scatter_3d", "line_3d"),
-    _is_px_keyword=False,
-)
-
-LegendTitle = build_text_graph_option(
-    _keyword="legend_title",
-    _label="Legend Title",
-    _valid_graph_types=SUPPORTED_GRAPH_TYPES,
-    _is_px_keyword=False,
-)
-
-TitleFontSize = build_numeric_graph_option(
-    _keyword="title_font_size",
-    _label="Title Font Size",
-    _valid_graph_types=SUPPORTED_GRAPH_TYPES,
-    _is_px_keyword=False,
-    _min=0,
-    _max=100,
-    _step=1,
-)
 
 GRAPH_OPTIONS: Tuple[Type["GraphOption"], ...] = tuple(GraphOption.__subclasses__())
 
