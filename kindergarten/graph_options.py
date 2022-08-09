@@ -458,6 +458,16 @@ NBinsY = build_numeric_graph_option(
     _keyword="nbinsy", _label="Y Bins", _min=0, _max=1000, _step=1
 )
 
+XBinsSize = build_numeric_graph_option(
+    _keyword="xbins_size",
+    _label="Size of X Bins",
+    _min=0,
+    _max=10000,
+    _step=1,
+    _is_px_keyword=False,
+    _valid_graph_types=("histogram",),
+)
+
 LineColor = build_select_graph_option(
     _keyword="line_color",
     _label="Line Color",
