@@ -167,16 +167,23 @@ fig.update_layout({}.layout)
             fig = make_subplots()
 
         for tab in self.tabs:
-            tab_fig = tab.figure()
-            tab_traces = list(tab_fig.select_traces())
-            tab_secondary_ys = [True if tab.use_secondary_y else None] * len(tab_traces)
+            if tab.has_figure():
+                tab_fig = tab.figure()
+                tab_traces = list(tab_fig.select_traces())
 
-            fig.add_traces(tab_traces, secondary_ys=tab_secondary_ys)
-            # noinspection PyTypeChecker
-            fig.update_layout(tab_fig.layout)
+                if tab.use_secondary_y:
+                    tab_secondary_ys = [True] * len(tab_traces)
+                    fig.add_traces(tab_traces, secondary_ys=tab_secondary_ys)
+                else:
+                    fig.add_traces(tab_traces)
+
+                # noinspection PyTypeChecker
+                fig.update_layout(tab_fig.layout)
 
         for tab in self.tabs:
-            fig.update_layout(tab.layout_kwargs())
+            fig.update_layout(**tab.layout_kwargs())
+
+        fig.update_layout(showlegend=True)
 
         return fig
 
