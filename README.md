@@ -2,7 +2,7 @@
 
 Kindergarten is a UI on top of Plotly to visualize Pandas DataFrames (and Series).
 
-Simply `pip install kindergarten`, and then do
+Simply `pip install --upgrade kindergarten`, and then do
 
 ```python
 from kindergarten import plot
@@ -22,6 +22,7 @@ If you need a different number of traces, you can specify the number with `plot(
 - supports a large part of the [Plotly](https://www.plotly.com) API
 - support for multiple traces that can use data from different dataframes
 - `Print Code` button below the plot that allows exporting the code that generates the figures
+- secondary y-axis support
 
 # Examples
 
