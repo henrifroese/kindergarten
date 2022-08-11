@@ -49,8 +49,8 @@ class Kindergarten:
                                 )
                             ),
                             html.Div(
-                                id="hidden-div",
-                                style={"display": "none"},
+                                [],
+                                id="print-code-div",
                             ),
                         ]
                     )
@@ -112,7 +112,7 @@ class Kindergarten:
             return self._figure()
 
         @self.app.callback(
-            Output("hidden-div", "children"), Input("print-code", "n_clicks")
+            Output("print-code-div", "children"), Input("print-code", "n_clicks")
         )
         def _on_print_code(n_clicks: int):
             if n_clicks > 0:
@@ -153,9 +153,9 @@ fig.update_layout({}.layout)
 
                 s += "\nfig.update_layout(showlegend=True)"
                 s += "\nfig.show()"
-                print(s)
-
-            return html.Div()
+            else:
+                s = ""
+            return dcc.Markdown("```python\n{}\n```".format(s))
 
     def _use_secondary_y(self) -> bool:
         return any(tab.use_secondary_y for tab in self.tabs)
