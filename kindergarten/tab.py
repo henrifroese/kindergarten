@@ -134,6 +134,13 @@ class Tab:
         if update_traces_kwargs:
             s += "{}.update_traces(**{})\n".format(varname, update_traces_kwargs)
 
+        s += """
+for data in {}["data"]:
+    data["showlegend"] = True
+""".format(
+            varname
+        )
+
         return s
 
     def has_figure(self) -> bool:
