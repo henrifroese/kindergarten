@@ -107,13 +107,15 @@ class Tab:
             return fig
 
         except:
-            print(
-                "Something went wrong generating the figure - "
-                "please consider opening an issue at "
-                "www.github.com/henrifroese/kindergarten/issues "
-                "to get this fixed. Here's the original "
-                "exception: {}".format(traceback.format_exc())
-            )
+            exception_message = traceback.format_exc()
+            if "Plotly Express cannot process wide-form data" not in exception_message:
+                print(
+                    "Something went wrong generating the figure - "
+                    "please consider opening an issue at "
+                    "https://www.github.com/henrifroese/kindergarten/issues "
+                    "to get this fixed. Here's the original "
+                    "exception: \n{}".format(exception_message)
+                )
             return go.Figure()
 
     def layout_kwargs(self):
